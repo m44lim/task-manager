@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Task Manager</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .input-section {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      #taskInput {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .task-item {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        margin: 5px 0;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .task-item input[type="checkbox"] {
+        margin-right: 10px;
+      }
+
+      .task-text {
+        flex: 1;
+        margin-right: 10px;
+      }
+
+      .delete-btn {
+        background-color: #dc3545;
+        padding: 5px 10px;
+        font-size: 12px;
+      }
+
+      .delete-btn:hover {
+        background-color: #c82333;
+      }
+
+      .completed {
+        text-decoration: line-through;
+        opacity: 0.6;
+      }
+
+      .no-tasks {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 40px 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Task Manager</h1>
+
+    <div class="input-section">
+      <input type="text" id="taskInput" placeholder="Enter a task" />
+      <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <div id="taskList">
+      <!-- Tasks will go here -->
+    </div>
+
+    <script>
+      // Array to store all of the tasks (now as objects, not just text)
+      let tasks = [];
+
+      function addTask() {
+        //Gets the text from the input box
+        const input = document.getElementById("taskInput");
+        const taskText = input.value;
+
+        //Don't add empty tasks
+        if (taskText === "") {
+          alert("Please enter a task!");
+          return;
+        }
+
+        const newTask = {
+          text: taskText,
+          completed: false,
+        };
+
+        //Add task object to the array/list
+        tasks.push(newTask);
+
+        //Clears the input box after task has been added to the list
+        input.value = "";
+
+        //Show all the tasks on the page
+        displayTasks();
+      }
+
+      function displayTasks() {
+        const taskList = document.getElementById("taskList");
+
+        //Clear the list first
+        taskList.innerHTML = "";
+
+        //If there are no task, display a nice message
+        if (tasks.length === 0) {
+          taskList.innerHTML =
+            '<div class="no-tasks">🎯 No tasks yet! Add one above to get started.</div>';
+          return;
+        }
+
+        //Add each task to the page
+        for (let i = 0; i < tasks.length; i++) {
+          const task = tasks[i];
+          const checked = task.completed ? "checked" : "";
+          const completedClass = task.completed ? "completed" : "";
+
+          taskList.innerHTML +=
+            '<div class="task-item">' +
+            '<input type="checkbox" ' +
+            checked +
+            ' onchange="toggleTask(' +
+            i +
+            ')">' +
+            '<span class="task-text ' +
+            completedClass +
+            '">' +
+            task.text +
+            "</span>" +
+            '<button class="delete-btn" onclick="deleteTask(' +
+            i +
+            ')">Delete</button>' +
+            "</div>";
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("taskInput")
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              addTask();
+            }
+          });
+      });
+
+      function toggleTask(index) {
+        //Flip the completed status
+        tasks[index].completed = !tasks[index].completed;
+
+        //Update the display
+        displayTasks();
+      }
+
+      function deleteTask(index) {
+        //Remove the task at the position 'index' from our array.
+        tasks.splice(index, 1);
+
+        //Update the display
+        displayTasks();
+      }
+    </script>
+  </body>
+</html>
