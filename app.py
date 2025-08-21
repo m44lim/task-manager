@@ -6,7 +6,7 @@ from mysql.connector import Error
 # Create the Flask app
 app = Flask(__name__)
 
-# NEW addition: MySQL connection settings (you MUST change the password if it's different)
+# NEW addition: MySQL connection settings 
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
@@ -45,7 +45,7 @@ HTML_TEMPLATE = '''
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>📝 My Task Manager (With Backend!)</title>
+    <title>📝 My Task Manager</title>
     <style>
       body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; background-color: #f5f5f5; }
       h1 { text-align: center; color: #333; margin-bottom: 30px; }
@@ -63,7 +63,7 @@ HTML_TEMPLATE = '''
     </style>
   </head>
   <body>
-    <h1>📝 My Task Manager (With Backend!)</h1>
+    <h1>📝 My Task Manager</h1>
 
     <div class="input-section">
       <input type="text" id="taskInput" placeholder="What do you need to do?" />
