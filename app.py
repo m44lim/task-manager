@@ -1,10 +1,15 @@
 # app.py - Your Flask server
-from flask import Flask, request, jsonify, render_template_string
+from flask import Flask, request, jsonify, render_template_string, send_from_directory
 import mysql.connector
 from mysql.connector import Error  
 
 # Create the Flask app
 app = Flask(__name__)
+
+# Favicon link to app.py
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory('static', 'favicon.ico')
 
 # NEW addition: MySQL connection settings 
 DB_CONFIG = {
